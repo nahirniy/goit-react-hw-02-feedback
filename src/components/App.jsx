@@ -12,14 +12,15 @@ class App extends Component {
     bad: 0,
   };
 
-  incrementValue = typeFeedback => {
-    this.setState(prevAmount => ({
-      [typeFeedback]: prevAmount[typeFeedback] + 1,
+  countFeedback = typeFeedback => {
+    this.setState(prevState => ({
+      [typeFeedback]: prevState[typeFeedback] + 1,
     }));
   };
 
   countTotalFeedback = () => {
-    return this.state.good + this.state.neutral + this.state.bad;
+    const { good, neutral, bad } = this.state;
+    return good + neutral + bad;
   };
 
   countPositiveFeedbackPercentage = () => {
@@ -27,28 +28,37 @@ class App extends Component {
   };
 
   render() {
-    const { good, neutral, bad } = this.state;
-    const total = this.countTotalFeedback();
+    const {
+      state,
+      state: { good, neutral, bad },
+      countFeedback,
+      countTotalFeedback,
+      countPositiveFeedbackPercentage,
+    } = this;
+
+    const total = countTotalFeedback();
+    const positivePercentage = countPositiveFeedbackPercentage();
 
     return (
       <div className="container">
         <Section title={'Please leave feedback'}>
           <FeedbackOptions
-            options={Object.keys(this.state)}
-            onLeaveFeedback={this.incrementValue}
+            options={Object.keys(state)}
+            countFeedback={countFeedback}
           />
         </Section>
+
         <Section title={'Statistics'}>
-          {total > 0 ? (
+          {total === 0 ? (
+            <Notification />
+          ) : (
             <Statistics
               good={good}
               neutral={neutral}
               bad={bad}
               total={total}
-              positivePercentage={this.countPositiveFeedbackPercentage()}
+              positivePercentage={positivePercentage}
             />
-          ) : (
-            <Notification />
           )}
         </Section>
       </div>

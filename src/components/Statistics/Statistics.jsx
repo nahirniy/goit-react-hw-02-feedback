@@ -10,7 +10,7 @@ export const Statistics = props => {
       <li className={css.statistics_item}>Bad: {bad}</li>
       <li className={css.statistics_item}>Total: {total}</li>
       <li className={css.statistics_item}>
-        Positive feedback: {positivePercentage || 0}%
+        Positive feedback: {positivePercentage}%
       </li>
     </ul>
   );
