@@ -1,8 +1,12 @@
 import css from './Statistics.module.css';
 
-export const Statistics = props => {
-  const { good, neutral, bad, total, positivePercentage } = props;
-
+export const Statistics = ({
+  good,
+  neutral,
+  bad,
+  total,
+  positivePercentage,
+}) => {
   return (
     <ul className={css.statistics_list}>
       <li className={css.statistics_item}>Good: {good}</li>
